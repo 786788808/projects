@@ -31,9 +31,11 @@ print(adv_df.shape)
 print(adv_df.sample(8))
 print(adv_df.describe())
 print(adv_df.info())
+print(adv_df.isnull().sum())
 ```
 观察:    
 ![](https://ftp.bmp.ovh/imgs/2020/11/70bf6b275a842503.png)
-![](https://ftp.bmp.ovh/imgs/2020/11/0eda4afca8080db9.png)
+![](https://ftp.bmp.ovh/imgs/2020/11/0eda4afca8080db9.png)   
 a1: 可以看到数据共有 2,645,958行 3列，数据量达到百万级别。总的来看，数据量还是可观的，后面再看各实验组的样本量够不够支撑实验结论。  
-a2: 
+a2: 各列都没有缺失值  
+
