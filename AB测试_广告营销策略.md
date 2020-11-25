@@ -34,11 +34,18 @@ print(adv_df.info())
 print(adv_df.isnull().sum())
 print(adv_df.duplicated().sum())
 adv_df.drop_duplicates(inplace=True)
+print(adv_df.shape[0])
+print(adv_df.pivot_table(index = "dmp_id", columns = "label", values = "user_id",
+                aggfunc = "count", margins = True))
 ```
 观察:    
 ![](https://ftp.bmp.ovh/imgs/2020/11/70bf6b275a842503.png)
 ![](https://ftp.bmp.ovh/imgs/2020/11/0eda4afca8080db9.png)
-![](https://ftp.bmp.ovh/imgs/2020/11/3e8cc28030b3df0e.png)   
-a1: 可以看到数据共有 2,645,958 行 3 列，数据量达到百万级别。总的来看，数据量还是可观的，后面再看各实验组的样本量够不够支撑实验结论。  
-a2: 各列都没有缺失值  
-a3: 存在重复行 12,983，AB测试中不能有重复行。删除掉重复的行，保留一行即可。  
+![](https://ftp.bmp.ovh/imgs/2020/11/3e8cc28030b3df0e.png)
+![](https://ftp.bmp.ovh/imgs/2020/11/a421f77a5193f197.png)   
+a1: 可以看到源数据共有 2,645,958 行 3 列，数据量达到百万级别。总的来看，数据量还是可观的，后面再看各实验组的样本量够不够支撑实验结论       
+a2: 各列都没有缺失值    
+a3: 存在重复行 12,983，AB测试中不能有重复行。删除掉重复的行，保留一行即可     
+a4: 没有异常值    
+a5: 经过基本的清洗后，剩下 2,632,975 行记录     
+
