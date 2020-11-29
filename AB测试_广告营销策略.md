@@ -19,7 +19,7 @@ https://tianchi.aliyun.com/dataset/dataDetail?dataId=50893&lang=zh-cn
 研究的初步想法是拿两组广告策略的点击率分别与对照组点击率进行比较。  
 设点击率：对照组：p1，广告组1：p2，广告组3：p3，拿p1与p2对比、p1与p3对比。  
 对比看哪组广告效果比较显著，又或者两组广告均没带来显著的效果。    
-先看看数据。没有表头，先给各特征名补上，并且将没实际用处的日志列 dt 删除掉。      
+(2)表数据还不能直接拿来分析，先清洗再分析。           
 ```
 import pandas as pd
 import numpy as np
@@ -27,15 +27,16 @@ import matplotlib.pyplot as plt
 plt.rcParams['font.sans-serif'] = ['SimHei']
 
 # 读取广告点击情况数据集  
+# 没有表头，先给各特征名补上
 adv_df = pd.read_csv(r'E:\dataset\audience_expansion\effect_tb.csv', header=None, names=['dt','user_id','label','dmp_id'])
-adv_df.drop(['dt'], axis=1, inplace=True)
+adv_df.drop(['dt'], axis=1, inplace=True)  # 将没实际用处的日志列 dt 删除掉
 print(adv_df.shape)
 print(adv_df.sample(8))
 print(adv_df.describe())
 print(adv_df.info())
-print(adv_df.isnull().sum())
-print(adv_df.duplicated().sum())
-adv_df.drop_duplicates(inplace=True)
+print(adv_df.isnull().sum())  # 是否有null值
+print(adv_df.duplicated().sum())  # 计算重复行数
+adv_df.drop_duplicates(inplace=True)# 删除重复的行
 print(adv_df.shape[0])
 print(adv_df.pivot_table(index='dmp_id', columns='label', values='user_id', aggfunc='count', margins=True))            
 ```
