@@ -20,13 +20,13 @@
 https://tianchi.aliyun.com/dataset/dataDetail?dataId=50893&lang=zh-cn    
 (2) 表记录了商业定向广告的点击情况，包含列：   
   - dt：日志时间，1：第一天，2：第二天
-  - dmp_id：营销策略编号 1：对照组，2：营销策略一，3：营销策略二
+  - dmp_id：营销策略编号，1：对照组，2：营销策略一，3：营销策略二
   - user_id：支付宝用户ID，唯一标识
   - label：用户当天是否点击活动广告 (0：未点击，1：点击)  
 >  
 ### 三. 数据清洗：    
 研究的初步想法是拿两组广告策略的点击率分别与对照组点击率进行比较。  
-设点击率：对照组：p1，广告组1：p2，广告组3：p3，拿p1与p2对比、p1与p3对比。  
+设点击率：对照组：p1，广告组1：p2，广告组2：p3，拿p1与p2对比、p1与p3对比。  
 对比看哪组广告效果比较显著，又或者两组广告均没带来显著的效果。    
 (2)表数据还不能直接拿来分析，先清洗再分析。           
 ```
@@ -88,15 +88,14 @@ print(adv_df[adv_df['dmp_id']==3]['label'].mean())  # 广告组 2 点击率
 原假设H0：p1 >= p3  
 备择假设H1：p1 < p3 (我想证明广告组2能提升一定的点击率，想收集证据去证明这一点，所以我在选备择假设的时候选了这个)  
 假设我选择显著性水平为0.05  
-#### (4.2) 检验
-参考检验：https://zhuanlan.zhihu.com/p/291692930?utm_source=wechat_timeline  
+#### (4.2) 检验 
 这里是两个总体比例之差的检验，要求两个样本都是大样本，用到Z检验    
 ```
 # impression曝光量  click点击
-impre_1 = adv_df[adv_df['dmp_id'] == 1].shape[0]    # 使用策略1的曝光量
-impre_3 = adv_df[adv_df['dmp_id'] == 3].shape[0]    # 使用策略3的曝光量
-click_1 = adv_df[(adv_df['dmp_id'] == 1) & (adv_df['label'] == 1)].shape[0]    # 使用策略1的曝光量
-click_3 = adv_df[(adv_df['dmp_id'] == 3) & (adv_df['label'] == 1)].shape[0]
+impre_1 = adv_df[adv_df['dmp_id'] == 1].shape[0]    # 对照组的曝光量
+impre_3 = adv_df[adv_df['dmp_id'] == 3].shape[0]    # 广告2的曝光量
+click_1 = adv_df[(adv_df['dmp_id'] == 1) & (adv_df['label'] == 1)].shape[0]    # 对照组的点击量
+click_3 = adv_df[(adv_df['dmp_id'] == 3) & (adv_df['label'] == 1)].shape[0]    # 广告组2的点击量
 print(impre_1,impre_3,click_1,click_3)
 z_score, p = sp.proportions_ztest([click_1,click_3], [impre_1,impre_3], alternative='smaller')
 print('z样本统计量：%d\n' % z_score)
