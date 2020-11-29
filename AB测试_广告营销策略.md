@@ -102,6 +102,6 @@ print('z样本统计量：%d\n' % z_score)
 print('P值：%d\n' % p)
 ```
 #### (4.3) 结论
-![](https://ftp.bmp.ovh/imgs/2020/11/7ed4367d1b7ed6a2.png)
+![](https://ftp.bmp.ovh/imgs/2020/11/7ed4367d1b7ed6a2.png)    
 看到样本统计量为-59，P值为0。P值＜0.05，拒绝原假设，认为广告组2的点击率比对照组有显著的提高。可认为广告策略2能有效提高广告点击率。
 
