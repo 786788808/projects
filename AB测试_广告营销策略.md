@@ -81,18 +81,18 @@ print(adv_df[adv_df['dmp_id']==3]['label'].mean())  # 广告组 2 点击率
 假设我选择显著性水平为0.05  
 #### (4.2) 检验
 参考检验：https://zhuanlan.zhihu.com/p/291692930?utm_source=wechat_timeline  
-这里是两个总体比例之差的检验，要求两个样本都是大样本，即 n1p1>=10, n1(1-p1)>=10, n2(1-p2)>=10  
-用到Z检验  
+这里是两个总体比例之差的检验，要求两个样本都是大样本，用到Z检验    
 ```
 # impression曝光量  click点击
-impre_1 = adv_df[adv_df['dmp_id'] == 1].shape[0]
-impre_3 = adv_df[adv_df['dmp_id'] == 3].shape[0]
-click_1 = adv_df[(adv_df['dmp_id'] == 1) & (adv_df['label'] == 1)].shape[0]
+impre_1 = adv_df[adv_df['dmp_id'] == 1].shape[0]    # 使用策略1的曝光量
+impre_3 = adv_df[adv_df['dmp_id'] == 3].shape[0]    # 使用策略3的曝光量
+click_1 = adv_df[(adv_df['dmp_id'] == 1) & (adv_df['label'] == 1)].shape[0]    # 使用策略1的曝光量
 click_3 = adv_df[(adv_df['dmp_id'] == 3) & (adv_df['label'] == 1)].shape[0]
 print(impre_1,impre_3,click_1,click_3)
 z_score, p = sp.proportions_ztest([click_1,click_3], [impre_1,impre_3], alternative='smaller')
 print('z样本统计量：%d\n' % z_score)
 print('P值：%d\n' % p)
 ```
-
+![]()
+看到样本统计量为-59，P值为0。P值＜0.05，拒绝原假设，认为广告组2的点击率比对照组有显著的提高。可认为广告策略2能有效提高广告点击率。
 # 继续补
